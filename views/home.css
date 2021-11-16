@@ -1,0 +1,57 @@
+body {
+	background-color: rgb(213, 117, 252);
+	font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+h1 {
+	text-align: center;
+	color: rgb(238, 255, 0);
+}
+
+.notice {
+	width: 400px;
+	margin: 1em auto;
+	padding: 1.2em;
+	background-color: rgb(52, 250, 79);
+	border-radius: 10px;
+	box-shadow: 5px 5px 2px rgb(44, 146, 58);
+	font-size: larger;
+	text-align: center;
+	transition: transform 0.4s ease;
+}
+
+.notice:hover{
+	transform: scale(1.03);
+}
+
+a{
+	background-color: rgb(87, 108, 177);
+	padding: 10px;
+	border-radius: 5px;
+	text-decoration: none;
+	font-weight: bold;
+	color: black;
+	transition: opacity 0.4s ease;
+}
+
+input {
+	font-size: 1rem;
+	padding: 0.4em 0.8em;
+	display: block;
+	width: 90%;
+	max-width: 500px;
+	margin: 0.8em;
+}
+
+input[type=submit] {
+	width: 200px;
+	background-color: rgb(87, 108, 177);
+	border: none;
+	color: white;
+	padding: 0.6em 0;
+	transition: opacity 0.4s ease;
+}
+
+input[type=submit]:hover, a:hover {
+	opacity: 0.8;
+}
