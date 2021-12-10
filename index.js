@@ -1,5 +1,8 @@
 const express = require("express");
 const session = require("express-session");
+const csrf = require("csurf");
+const cookie_parser = require("cookie-parser");
+const sanitizeHtml = require('sanitize-html');
 
 const app = express();
 const sessions = {};
@@ -9,6 +12,7 @@ const sessions = {};
 // Middlewares
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("views"));
+app.use(cookie_parser());
 app.use(
 	session({
 		secret: "Session Secret",
@@ -16,6 +20,7 @@ app.use(
 		saveUninitialized: false,
 	})
 );
+const csrf_protection = csrf({cookie: true});
 
 // Custom middleware
 function authenticate(req, res, next) {
@@ -91,10 +96,7 @@ app.post("/login", async (req, res) => {
 	}
 });
 
-app.post("/sendCoins", authenticate, async (req, res) => {
-	// console.log(req.session.authUser);
-	// console.log(req.body.to);
-	// console.log(req.body.amount);
+app.post("/sendCoins", authenticate, csrf_protection, async (req, res) => {
 	await transferCoin(req.session.authUser, req.body.to, req.body.amount);
 	res.send("Successful");
 });
@@ -120,7 +122,8 @@ app.get("/profile/:id", async (req, res) => {
 
 app.get("/search", (req, res)=>{
 	console.log(req.query);
-	res.render('search.ejs', {search: req.query.search});
+	const clean = sanitizeHtml(req.query.search);
+	res.render('search.ejs', {search: clean});
 });
 
 app.listen(8000, () => console.log("Running at port 8000 ..."));
